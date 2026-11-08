@@ -1,0 +1,27 @@
+# Header comment paragraph
+# second line
+
+## Docker CE
+# managed by hand
+types: deb
+URIs:   https://download.docker.com/linux/debian
+Suites: trixie
+Components: stable
+Architectures: amd64
+Signed-By: /etc/apt/keyrings/docker.asc
+X-Custom: keep me
+
+# Disabled VS Code
+Types: deb
+URIs: https://packages.microsoft.com/repos/code
+Suites: stable
+Components: main
+Enabled: no
+Signed-By:
+ -----BEGIN PGP PUBLIC KEY BLOCK-----
+ .
+ mQENBFfakekeydata
+ -----END PGP PUBLIC KEY BLOCK-----
+
+
+# trailing comment

@@ -1,0 +1,9 @@
+# Legacy sources.list
+
+deb http://deb.debian.org/debian bookworm main contrib
+deb-src http://deb.debian.org/debian bookworm main contrib
+#deb  http://deb.debian.org/debian bookworm-backports main   # old backports
+deb [arch=amd64,i386 signed-by=/etc/apt/keyrings/missing.gpg] https://example.com/repo ./
+deb [ trusted=yes ] file:/srv/local stable main
+# This is just a comment, not an entry
+deb http://deb.debian.org/debian trixie main

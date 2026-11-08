@@ -1,0 +1,8 @@
+/aptsourcesctl
+/aptsourcesctl_helper
+/tests/t*
+!/tests/t*.nim
+/tools/dump
+nimcache/
+nimblecache/
+*.bak

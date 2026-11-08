@@ -1,0 +1,14 @@
+Explanation: Prefer stable, allow testing on request
+Package: *
+Pin: release a=trixie
+Pin-Priority: 900
+
+Explanation: Keep firefox from testing
+Package: firefox-esr
+Pin: release n=forky
+Pin-Priority: 990
+
+# never install snapd
+Package: snapd
+Pin: release *
+Pin-Priority: -1

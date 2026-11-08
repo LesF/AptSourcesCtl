@@ -6,6 +6,11 @@ A KDE/Qt 6 control panel for viewing and editing APT configuration on Debian
 
 Written in [Nim](https://nim-lang.org) with [seaqt](https://github.com/seaqt/nim-seaqt) Qt Widgets bindings.
 
+## Motivation
+
+I have used apt/sources as a data source while tinkering with other languages, mostly as a view-only resource, while learning UI tools or just passing time.
+This is an exercise in learning Nim and Qt, where I will go further and include updates to sources and managing keyrings.  I will update this comment if/when I believe it is safe to use on live sources, until then see APTSOURCESCTL_ROOT below.
+
 ## Design
 
 - `src/core/` — UI-free library. Parsers keep files **byte-for-byte** intact

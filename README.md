@@ -22,19 +22,20 @@ This is an exercise in learning Nim and Qt, where I will go further and include 
 ## Requirements
 
 ```sh
-sudo apt install qt6-base-dev gpg pkexec   # Qt headers, key inspection, elevation
-choosenim stable                           # Nim >= 2.2
+sudo apt install qt6-base-dev qt6-base-private-dev gpg pkexec   # Qt headers, key inspection, elevation
+choosenim stable                                                # Nim >= 2.2
 ```
 
-## Development
+## Development & Usage
 
 ```sh
-nimble test          # core tests (fixtures in tests/fixtures/root)
+nimble build         # build aptsourcesctl and aptsourcesctl_helper
+nimble test          # run all test suites (core + gui state + headless launch)
 nimble dump          # print what the core sees on this system
-nim r tools/dump.nim tests/fixtures/root   # ...or on the fixture tree
+./aptsourcesctl      # launch the Qt 6 system settings control panel
 ```
 
-Set `APTSOURCESCTL_ROOT=/some/dir` to operate on a sandbox copy of `/etc/apt`.
+Set `APTSOURCESCTL_ROOT=/some/dir` (or pass `--root=<dir>`) to operate on a sandbox copy of `/etc/apt` (e.g. `tests/fixtures/root`).
 
 ## Licence
 

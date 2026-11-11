@@ -162,6 +162,9 @@ proc applyPendingChanges*(self: MainWindow) =
   # 2. Process converted files
   for origPath, conv in self.state.converted:
     try:
+      let dir = conv.path.parentDir
+      if not dirExists(dir):
+        createDir(dir)
       writeFile(conv.path, conv.render)
       if fileExists(origPath):
         removeFile(origPath)

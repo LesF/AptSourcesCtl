@@ -1,6 +1,6 @@
 ## In-memory state and dirty-change manager for AptSourcesCtl.
 
-import std/[strutils, tables, sets]
+import std/[os, strutils, tables, sets]
 import ../core
 import ./diffutil
 
@@ -98,10 +98,12 @@ proc convertFileToDeb822*(self: AppState, fileIdx: int): bool =
   if orig.format != sfOneLine: return false
 
   let deb822Text = orig.convertToDeb822()
-  let targetPath = if orig.path.endsWith(".list"):
-    orig.path[0 ..< orig.path.len - 5] & ".sources"
+  let filename = extractFilename(orig.path)
+  let baseName = if filename.endsWith(".list"):
+    filename[0 ..< filename.len - 5] & ".sources"
   else:
-    orig.path & ".sources"
+    filename & ".sources"
+  let targetPath = self.paths.sourcesListD / baseName
 
   let convertedFile = parseSourceContent(targetPath, deb822Text)
   self.converted[orig.path] = convertedFile

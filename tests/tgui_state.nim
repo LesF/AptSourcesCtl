@@ -1,4 +1,4 @@
-import std/[unittest, strutils]
+import std/[unittest, strutils, tables, os]
 import ../src/gui/[diffutil, appstate]
 import ../src/core
 
@@ -39,9 +39,13 @@ suite "diff and appstate":
     check not state.isDirty()
 
     # Convert to deb822
+    let origPath = state.sources[olIdx].path
     let convertedOk = state.convertFileToDeb822(olIdx)
     check convertedOk
     check state.isDirty()
+    check origPath in state.converted
+    check state.converted[origPath].path == state.paths.sourcesListD / "sources.sources"
     let convDiffs = state.getDiffs()
     check convDiffs.len == 2 # 1 new deb822, 1 removed one-line
+    check convDiffs[0].path == state.paths.sourcesListD / "sources.sources"
 

@@ -1,0 +1,32 @@
+name: Release .deb
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  deb:
+    strategy:
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    container: debian:trixie
+    steps:
+      - name: Install build tools
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends build-essential debhelper devscripts \
+            qt6-base-dev qt6-base-private-dev git ca-certificates curl xz-utils
+      - uses: actions/checkout@v4
+      - name: Install Nim
+        run: |
+          curl -sSf https://nim-lang.org/choosenim/init.sh | sh -s -- -y
+          echo "$HOME/.nimble/bin" >> "$GITHUB_PATH"
+      - name: Build
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          DEB_BUILD_OPTIONS=nocheck dpkg-buildpackage -us -uc -b
+          mkdir out && mv ../*.deb out/
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.deb

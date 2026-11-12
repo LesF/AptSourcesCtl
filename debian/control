@@ -1,0 +1,26 @@
+Source: aptsourcesctl
+Section: admin
+Priority: optional
+Maintainer: LesF <lhf@xtra.co.nz>
+Build-Depends: debhelper-compat (= 13),
+               qt6-base-dev,
+               qt6-base-private-dev,
+               git,
+               ca-certificates
+Standards-Version: 4.7.0
+Homepage: https://github.com/LesF/AptSourcesCtl
+Vcs-Git: https://github.com/LesF/AptSourcesCtl.git
+Vcs-Browser: https://github.com/LesF/AptSourcesCtl
+Rules-Requires-Root: no
+
+Package: aptsourcesctl
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, pkexec, gpg, qt6-svg-plugins
+Description: Qt 6 control panel for APT sources, keyrings and pinning
+ AptSourcesCtl views and edits APT configuration on Debian: one-line
+ .list and deb822 .sources repository files, signing keyrings, and
+ pinning preferences. Files are edited byte-for-byte preserving comments
+ and layout.
+ .
+ The GUI runs as the user; writes under /etc/apt go through a small
+ privileged helper authorised with polkit (pkexec).

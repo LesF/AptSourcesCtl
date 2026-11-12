@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+# Nim >= 2.2 and nimble must be on PATH (e.g. via choosenim); Debian's nim is too old.
+# debhelper 13 overrides HOME, so keep nimble's package cache inside the build tree.
+export NIMBLE_DIR ?= $(CURDIR)/debian/.nimble
+NIMFLAGS = -d:release --opt:speed --debugger:native --nimbleDir:$(NIMBLE_DIR)
+APPID = io.github.lesf.AptSourcesCtl
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	nimble install -y --depsOnly --nimbleDir:$(NIMBLE_DIR)
+
+override_dh_auto_build:
+	nimble build -y $(NIMFLAGS)
+
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	QT_QPA_PLATFORM=offscreen nimble test -y --nimbleDir:$(NIMBLE_DIR)
+endif
+
+override_dh_auto_install:
+	install -Dm755 aptsourcesctl debian/aptsourcesctl/usr/bin/aptsourcesctl
+	install -Dm755 aptsourcesctl_helper debian/aptsourcesctl/usr/libexec/aptsourcesctl/aptsourcesctl_helper
+	install -Dm644 data/$(APPID).desktop debian/aptsourcesctl/usr/share/applications/$(APPID).desktop
+	install -Dm644 data/$(APPID).metainfo.xml debian/aptsourcesctl/usr/share/metainfo/$(APPID).metainfo.xml
+	install -Dm644 data/io.github.lesf.aptsourcesctl.policy debian/aptsourcesctl/usr/share/polkit-1/actions/io.github.lesf.aptsourcesctl.policy
+	install -Dm644 data/icons/hicolor/scalable/apps/aptsourcesctl.svg debian/aptsourcesctl/usr/share/icons/hicolor/scalable/apps/aptsourcesctl.svg
+
+override_dh_auto_clean:
+	rm -rf nimcache debian/.nimble aptsourcesctl aptsourcesctl_helper

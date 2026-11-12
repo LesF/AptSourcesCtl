@@ -1,7 +1,7 @@
 # Package
 
 version       = "0.1.0"
-author        = "Egbert"
+author        = "LesF"
 description   = "View and edit APT sources, keyrings and pinning (Qt 6 / KDE)"
 license       = "GPL-3.0-or-later"
 srcDir        = "src"

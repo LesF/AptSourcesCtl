@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=APT Sources
+GenericName=Software Sources
+Comment=View and edit APT repositories, keyrings and pinning
+Exec=aptsourcesctl
+Icon=aptsourcesctl
+Terminal=false
+Categories=Qt;KDE;System;Settings;PackageManager;
+Keywords=apt;repository;sources;deb822;keyring;pinning;

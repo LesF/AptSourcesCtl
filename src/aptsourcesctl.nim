@@ -1,9 +1,11 @@
 ## AptSourcesCtl - Qt 6 / seaqt Control Panel for APT Software Sources.
 
 import std/[os, parseopt]
-import seaqt/[qapplication, qmainwindow, qwidget]
+import seaqt/[qapplication, qguiapplication, qmainwindow, qwidget, qicon, qpixmap]
 import ./gui/appstate
 import ./gui/mainwindow
+
+const AppIconSvg = staticRead("../data/icons/hicolor/scalable/apps/aptsourcesctl.svg")
 
 proc main() =
   var rootDir = getEnv("APTSOURCESCTL_ROOT", "")
@@ -24,6 +26,13 @@ proc main() =
         rootDir = p.key
 
   let app = QApplication.create()
+  # Match the installed .desktop file (Wayland app_id / taskbar grouping).
+  QGuiApplication.setDesktopFileName("io.github.lesf.AptSourcesCtl")
+  # Prefer the themed icon; fall back to the SVG embedded at compile time.
+  let fallbackPix = QPixmap.create()
+  discard fallbackPix.loadFromData(AppIconSvg.toOpenArrayByte(0, AppIconSvg.high), "SVG")
+  QGuiApplication.setWindowIcon(
+    QIcon.fromTheme("aptsourcesctl", QIcon.create(fallbackPix)))
   let state = newAppState(rootDir)
   let mw = createMainWindow(state)
   mw.win.show()

@@ -40,3 +40,19 @@ Set `APTSOURCESCTL_ROOT=/some/dir` (or pass `--root=<dir>`) to operate on a sand
 ## Licence
 
 GPL-3.0-or-later — see [LICENSE](LICENSE).
+
+## Install from .deb
+
+Download `aptsourcesctl_<version>_<arch>.deb` from the
+[Releases](https://github.com/LesF/AptSourcesCtl/releases) page, then:
+
+```sh
+sudo apt install ./aptsourcesctl_*.deb
+```
+
+To build it yourself (needs Nim >= 2.2 on `PATH`):
+
+```sh
+sudo apt install build-essential debhelper devscripts lintian qt6-base-dev qt6-base-private-dev
+tools/build-deb.sh            # result lands in ../
+```

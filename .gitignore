@@ -6,3 +6,10 @@
 nimcache/
 nimblecache/
 *.bak
+debian/.debhelper/
+debian/.nimble/
+debian/aptsourcesctl/
+debian/debhelper-build-stamp
+debian/files
+debian/*.substvars
+debian/*.log

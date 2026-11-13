@@ -25,12 +25,14 @@ proc main() =
       if rootDir.len == 0:
         rootDir = p.key
 
-  let app = QApplication.create()
+  # Must stay alive for the whole run; never referenced directly.
+  let app {.used.} = QApplication.create()
   # Match the installed .desktop file (Wayland app_id / taskbar grouping).
   QGuiApplication.setDesktopFileName("io.github.lesf.AptSourcesCtl")
   # Prefer the themed icon; fall back to the SVG embedded at compile time.
   let fallbackPix = QPixmap.create()
-  discard fallbackPix.loadFromData(AppIconSvg.toOpenArrayByte(0, AppIconSvg.high), "SVG")
+  discard fallbackPix.loadFromData(AppIconSvg.toOpenArrayByte(0,
+      AppIconSvg.high), "SVG")
   QGuiApplication.setWindowIcon(
     QIcon.fromTheme("aptsourcesctl", QIcon.create(fallbackPix)))
   let state = newAppState(rootDir)
